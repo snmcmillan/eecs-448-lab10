@@ -1,0 +1,33 @@
+<html>
+    <body>
+        <h1>
+            Shu's Message Board
+        </h1>
+
+        <h2>
+            View User Posts:
+        </h2>
+        <form action="ViewUserPosts.php" method="post">
+            <label for="user">Username</label>
+            <br>
+            <select name="user">
+                <?php
+                $mysqli = new mysqli("mysql.eecs.ku.edu", "username", "password", "db");
+                if ($mysqli->connect_errno){
+                    printf("Connect failed: %s\n", $mysqli->connect_error);
+                    exit();
+                }
+                if($result = $mysqli->query("SELECT user_id FROM Users")){
+                    while($row = $result->fetch_assoc()){
+                        echo("<option value=\"" . $row["user_id"] . "\">" . $row["user_id"] . "</option>");
+                    }
+                    $result->free();
+                }
+                $mysqli->close();
+                ?>
+            </select>
+            <br>
+            <input type="submit">
+        </form>
+    </body>
+</html>
